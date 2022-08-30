@@ -46,11 +46,13 @@ def file_moderation(file: Path, path: Path) -> str|None:
             if folder_name == "archives":
                 archive_folder = folder.joinpath(file.name.removesuffix(file.suffix))
                 archive_folder.mkdir(exist_ok=True)
-
-                shutil.unpack_archive(
-                    file, 
-                    archive_folder
-                )
+                try:
+                    shutil.unpack_archive(
+                        file, 
+                        archive_folder
+                    )
+                except shutil.ReadError as e:
+                    print(f"Виникла помилка: {e}\nНевдала спроба розпакувати архів: {file.absolute()}")
             
             return folder_name
     else:
