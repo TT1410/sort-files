@@ -6,7 +6,7 @@ from pathlib import Path
 from time import sleep
 from constants import DIR_SUFF_DICT, TRANS, FOUND_FILES
 
-def sort(path: Path) -> dict[str, list]:
+def sort(path: Path) -> None:
 
     file_extensions = {}
 
@@ -64,7 +64,7 @@ def file_moderation(file: Path, path: Path) -> str|None:
         )
 
 
-def folder_moderation(folder: Path):
+def folder_moderation(folder: Path) -> None:
     if not os.listdir(folder):
         folder.rmdir()
 
@@ -116,9 +116,7 @@ def main():
                 f"{str(path.absolute()).removesuffix(path.name)}/SORTED"
             )
     
-    print("\n[!] Сортування завершено\n")
-
-    print("""
+    print("""\n[!] Сортування завершено
     Знайдено {images_len} файлів категорії images: {images}
     Знайдено {documents_len} файлів категорії documents: {documents}
     Знайдено {audio_len} файлів категорії audio: {audio}
