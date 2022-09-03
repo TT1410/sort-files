@@ -98,27 +98,28 @@ def main() -> None:
     if len(sys.argv) < 2:
         raise Exception("[-] Аргументом при запуску скрипта не передано шлях до директорії")
     
-    path = Path(sys.argv[1])
+    root_folder = Path(sys.argv[1])
 
-    if not path.exists():
+    if not root_folder.exists():
         raise Exception("[-] Неіснуюча директорія")
 
-    elif path.is_file():
+    elif root_folder.is_file():
         raise Exception("[-] За даним шляхом знаходиться файл")
 
     extensions = []
 
-    for x in DIR_SUFF_DICT.values():
-        extensions.extend(x)
+    for ext in DIR_SUFF_DICT.values():
+        extensions.extend(ext)
         
     print(f"Пошук файлів з наступними розширеннями: {extensions}")
     sleep(5)
 
-    sort(path)
+    sort(root_folder)
 
-    path.rename(
-                f"{str(path.absolute()).removesuffix(path.name)}/SORTED"
-            )
+    root_folder.rename(
+        Path(str(root_folder.absolute()).removesuffix(root_folder.name))
+        .joinpath("SORTED")
+    )
     
     print("""\n[!] Сортування завершено
     Знайдено {images_len} файлів категорії images: {images}
@@ -126,7 +127,7 @@ def main() -> None:
     Знайдено {audio_len} файлів категорії audio: {audio}
     Знайдено {video_len} файлів категорії video: {video}
     Знайдено та розпаковано {archives_len} файлів категорії archives: {archives}
-    Знайдено {archives_len} файлів з невідомим розширенням: {archives}
+    Знайдено {unknown_len} файлів з невідомим розширенням: {unknown}
     """.format(
         images_len=len(FOUND_FILES['images']), 
         documents_len=len(FOUND_FILES['documents']), 
