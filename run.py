@@ -10,7 +10,7 @@ from constants import DIR_SUFF_DICT, TRANS, FOUND_FILES
 def sort(path: Path) -> None:
     file_extensions = {}
     other_file_extensions = [0, set()]
-    
+
     for el in path.iterdir():
         
         if el.is_file():
@@ -29,7 +29,7 @@ def sort(path: Path) -> None:
     report_folder(path, file_extensions, other_file_extensions)
 
 
-def file_moderation(file: Path, path: Path) -> str|None:
+def file_moderation(file: Path, path: Path) -> str | None:
 
     for folder_name, suffixes in DIR_SUFF_DICT.items():
         if file.suffix.lower() in suffixes:
@@ -97,7 +97,9 @@ def report_folder(path: Path, file_extensions: dict, other_file_extensions: list
 def main() -> None:
     if len(sys.argv) < 2:
         raise Exception("[-] Аргументом при запуску скрипта не передано шлях до директорії")
-    
+
+    # sys.argv[1]  # "C:\\Users\\38063\OneDrive\\Робочий стіл\\GoIT\\Разное.jpg"
+
     root_folder = Path(sys.argv[1])
 
     if not root_folder.exists():
